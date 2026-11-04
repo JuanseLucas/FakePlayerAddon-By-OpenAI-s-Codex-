@@ -1,0 +1,17 @@
+{
+  "passed": false,
+  "checks": [
+    "External hopper clock ticks before any bot",
+    "Buffered border-chunk silverfish count toward vanilla monster cap",
+    "Create original spawning-enabled Fakeplayer"
+  ],
+  "observations": {
+    "monstersBefore": 250,
+    "externalBlockGateBefore": true,
+    "externalBlockGateAfter": false,
+    "hopperBefore": 59,
+    "hopperAfter": 59,
+    "monstersAfter": 250
+  },
+  "failure": "java.lang.AssertionError: Spawning-enabled bot does not disable an external loader clock\u0027s block ticking"
+}

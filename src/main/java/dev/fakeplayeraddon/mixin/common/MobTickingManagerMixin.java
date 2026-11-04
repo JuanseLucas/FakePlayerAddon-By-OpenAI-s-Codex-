@@ -7,6 +7,7 @@ import de.chunkloader.config.ChunkloaderPaths;
 import de.chunkloader.fakeplayer.ChunkloaderFakePlayer;
 import de.chunkloader.manager.ChunkloaderManager;
 import dev.fakeplayeraddon.mob.MobTicking;
+import dev.fakeplayeraddon.mob.IndependentTicking;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.server.MinecraftServer;
@@ -23,6 +24,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MobTickingManagerMixin {
     @Shadow private ChunkloaderConfig config;
     @Shadow @Final private java.util.Map<ChunkloaderManager.ChunkKey, ChunkloaderFakePlayer> activeFakePlayers;
+
+    @Inject(method = "shouldControlTicksInDimension", at = @At("HEAD"), cancellable = true)
+    private void fakeplayeraddon$preserveIndependentLoaders(String dimension, CallbackInfoReturnable<Boolean> cir) {
+        if (IndependentTicking.bypass()) cir.setReturnValue(false);
+    }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void fakeplayeraddon$initializeSettings(CallbackInfo ci) {
@@ -66,6 +72,9 @@ public abstract class MobTickingManagerMixin {
     @Redirect(method = "cleanupFrozenMobsInChunkplayerAreas", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/entity/Mob;remove(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"))
     private void fakeplayeraddon$preserveControlledMob(Mob mob, Entity.RemovalReason reason) {
-        if (!MobTicking.protectedMob(mob)) mob.remove(reason);
+        var p = mob.chunkPosition();
+        if (!MobTicking.protectedMob(mob)
+                && !(mob.level() instanceof net.minecraft.server.level.ServerLevel level
+                    && IndependentTicking.covers(level, p.x(), p.z(), true))) mob.remove(reason);
     }
 }

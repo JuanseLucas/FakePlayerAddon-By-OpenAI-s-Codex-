@@ -48,24 +48,24 @@
     "vanillaCountedMonsters": 4,
     "finalMobTicks": [
       {
-        "alive": true,
+        "tickCount": 395,
         "type": "villager",
-        "tickCount": 395
+        "alive": true
       },
       {
-        "alive": true,
+        "tickCount": 395,
         "type": "iron_golem",
-        "tickCount": 395
+        "alive": true
       },
       {
-        "alive": true,
+        "tickCount": 395,
         "type": "zombie",
-        "tickCount": 395
+        "alive": true
       },
       {
-        "alive": true,
+        "tickCount": 395,
         "type": "silverfish",
-        "tickCount": 395
+        "alive": true
       }
     ]
   }

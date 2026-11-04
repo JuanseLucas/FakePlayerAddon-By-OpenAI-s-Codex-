@@ -1,4 +1,5 @@
 {
+  "passed": true,
   "checks": [
     "Original F8 widgets retain Edit, Restore, Delete, Close",
     "Active menu has Configure, Delete, Close and removes Edit/Restore",
@@ -24,6 +25,5 @@
     "Confirmed remote deletion removes Nether bot through original server management",
     "Remote deletion preserves the other active bot"
   ],
-  "passed": true,
   "failure": ""
 }

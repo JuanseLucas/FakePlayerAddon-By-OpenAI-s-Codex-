@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": [
+    "Nearby real-player instance establishes vanilla spawning eligibility before bot activation",
+    "External hopper clock ticks before any bot",
+    "Buffered border-chunk silverfish count toward vanilla monster cap",
+    "Create original spawning-enabled Fakeplayer",
+    "Spawning-enabled bot overlapping real player does not shrink or double-count vanilla eligible chunks",
+    "Actual server spawning pipeline uses vanilla distance-tracker count unchanged",
+    "Spawning-enabled bot does not disable an external loader clock\u0027s block ticking",
+    "External hopper clock continues transferring with spawning-enabled bot active",
+    "Buffered silverfish remain in vanilla mobcap after bot activation",
+    "Actual portal-ticket neighbor clock keeps ticking",
+    "Independent clock inside bot ticket footprint keeps ticking",
+    "Addon OFF toggle and original cleanup preserve independently ticking mobs inside overlapping bot area",
+    "External ticket preservation does not grant spawning eligibility to spawning-OFF bot",
+    "Buffered silverfish still count after mode and independent ticking toggles"
+  ],
+  "observations": {
+    "monstersBefore": 250,
+    "externalBlockGateBefore": true,
+    "externalBlockGateAfter": true,
+    "hopperBefore": 59,
+    "hopperAfter": 54,
+    "monstersAfter": 250,
+    "eligibleChunksBefore": 289,
+    "eligibleChunksAfter": 289
+  },
+  "failure": ""
+}

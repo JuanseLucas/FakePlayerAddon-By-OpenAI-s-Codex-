@@ -3,6 +3,7 @@ package dev.fakeplayeraddon.mixin.common;
 import de.chunkloader.ChunkloaderMod;
 import de.chunkloader.manager.ChunkloaderManager;
 import dev.fakeplayeraddon.mob.MobTicking;
+import dev.fakeplayeraddon.mob.IndependentTicking;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -35,6 +36,7 @@ public abstract class MobTickingLevelMixin {
         var manager = ChunkloaderMod.getChunkloaderManager();
         var dimension = ChunkloaderManager.getDimensionString(level);
         return MobTicking.controls(manager, position.x(), position.z(), dimension)
+                && !IndependentTicking.covers(level, position.x(), position.z(), true)
                 && !MobTicking.covers(manager, position.x(), position.z(), dimension)
                 && !MobTicking.nearRealPlayer(level, position.x(), position.z());
     }

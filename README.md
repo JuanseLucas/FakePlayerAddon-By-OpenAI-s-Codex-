@@ -3,9 +3,12 @@
 A separate client-and-server Fabric addon for Minecraft Java **26.3** and
 **Fakeplayer Chunkloader 2.1.0**. Java **25** is required.
 
-Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.0.jar) or
-[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.0.zip).
+Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.1.jar) or
+[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.1.zip).
 Checksums are in [dist/SHA256SUMS](dist/SHA256SUMS).
+
+**1.0.1 fixes independent chunkloader ticking and mob-switch compatibility.**
+See [diagnosis, patch scope, and regression evidence](MOBCAP_FIX.md).
 
 ## Validation
 

@@ -4,6 +4,9 @@
   "package": "dev.fakeplayeraddon.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "common.ChunkTicketAccess",
+    "common.TicketStorageAccess",
+    "common.IndependentTickingLevelMixin",
     "common.UpstreamNetworkingAccess",
     "common.ActiveTargetsAccess",
     "common.MobTickingConfigMixin",

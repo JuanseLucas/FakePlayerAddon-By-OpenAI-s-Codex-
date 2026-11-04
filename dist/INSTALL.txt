@@ -1,4 +1,4 @@
-Fakeplayer Chunkloader Addon 1.0.0
+Fakeplayer Chunkloader Addon 1.0.1
 Minecraft Java 26.3 | Fabric Loader 0.19.5+ | Java 25+
 
 Install this jar on both client and dedicated server alongside:
@@ -12,3 +12,5 @@ Enable Mob Entity Ticking separately from natural spawning for each bot.
 The existing F8 Disabled Bots menu is retained.
 
 The original mod is required and is not bundled.
+
+Replace the previous addon JAR with 1.0.1; keep Fakeplayer Chunkloader 2.1.0 installed.

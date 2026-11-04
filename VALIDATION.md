@@ -1,5 +1,21 @@
 # Validation record
 
+## Version 1.0.1
+
+JAR SHA-256: `6f480fe7abcca1049a4b2dfcdaf8369ce0578f23aa2c338daeecac5792dea2b0`
+
+The 1.0.1 build, ten persistence checks, 40 dedicated-server checks, ten real
+restart checks, 14 new mob-switch/independent-loader regression checks, and all 23 rendered
+client/singleplayer checks pass.
+See [MOBCAP_FIX.md](MOBCAP_FIX.md) and `verification/results/` for the diagnosis
+and before/after records. Current downloads and checksums are in `dist/`.
+
+The detailed 1.0.0 record below is retained as release history. All recorded
+passing runtime results in verification/results/ have also been rerun on 1.0.1,
+except the deliberately failing before-patch regression record.
+
+## Original 1.0.0 release record
+
 Verified on Minecraft Java 26.3, Java 25, Fabric Loader 0.19.5, Fabric API
 0.160.7+26.3, and Fakeplayer Chunkloader 2.1.0 from upstream commit
 `1ffa15f8a216ae28556c988ff08cf8752a9a0436`.

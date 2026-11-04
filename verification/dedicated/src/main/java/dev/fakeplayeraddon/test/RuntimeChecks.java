@@ -52,19 +52,17 @@ public final class RuntimeChecks implements ModInitializer {
     private List<ServerPlayer> actualPlayers;
     private ServerPlayer distantPlayer;
     private boolean restartMode;
+    private boolean serverReady;
 
     @Override
     public void onInitialize() {
-        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-            try {
-                setup(server);
-            } catch (Throwable failure) {
-                finish(server, failure);
-            }
-        });
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> serverReady = true);
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (finished || level == null) return;
+            if (finished || !serverReady) return;
             try {
+                // All SERVER_STARTED listeners (including upstream restore) must
+                // finish before fixtures are created, regardless of mod init order.
+                if (level == null) { setup(server); return; }
                 tick(server);
             } catch (Throwable failure) {
                 finish(server, failure);

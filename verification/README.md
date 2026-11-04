@@ -5,6 +5,13 @@ They are not bundled in the addon JAR. Recorded passing results are in `results/
 40 dedicated checks, 10 real-restart checks, and 23 client/singleplayer checks.
 The root project's JUnit suite also runs 10 persistence checks.
 
+Version 1.0.1 adds 14 independent-loader/mob-switch checks under `mobcap/`.
+Run that project with the same jar properties and isolated server preparation
+as the dedicated project, on a fresh world. Its `run/mobcap-results.json`
+must report `passed: true`. The recorded `mobcap-before-patch.json` deliberately
+contains the expected failure from addon 1.0.0, not a current failing test.
+The current results total 97 passing checks including the root JUnit assertions.
+
 Use Java 25 and first build the addon as described in the root README. Each
 harness accepts `-PchunkloaderJar=/absolute/path/to/original.jar` and optionally
 `-PaddonJar=/absolute/path/to/addon.jar`; the addon defaults to the root build

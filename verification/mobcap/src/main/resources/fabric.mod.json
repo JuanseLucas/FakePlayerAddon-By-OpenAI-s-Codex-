@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "fakeplayeraddon_mobcap_checks",
+  "version": "1.0.0",
+  "name": "Local Addon Runtime Checks",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "dev.fakeplayeraddon.test.MobcapChecks"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": "*",
+    "minecraft": "26.3",
+    "chunkloader": "2.1.0",
+    "fakeplayeraddon": "*"
+  }
+}
