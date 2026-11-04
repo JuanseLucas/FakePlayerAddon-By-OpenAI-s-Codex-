@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "fakeplayeraddon",
+  "version": "${version}",
+  "name": "Fakeplayer Chunkloader Addon",
+  "description": "Active bot management and independent per-bot mob entity ticking for Fakeplayer Chunkloader 2.1.0.",
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.fakeplayeraddon.FakeplayerAddon"],
+    "client": ["dev.fakeplayeraddon.client.FakeplayerAddonClient"]
+  },
+  "mixins": ["fakeplayeraddon.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": ">=0.160.7+26.3",
+    "minecraft": "26.3",
+    "java": ">=25",
+    "chunkloader": "2.1.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "Original F8 widgets retain Edit, Restore, Delete, Close",
+    "Active menu has Configure, Delete, Close and removes Edit/Restore",
+    "Active action widget bounds match original F8 layout",
+    "Active screen title",
+    "Inherited search filters active rows",
+    "In-flight disabled response cannot replace active rows",
+    "Active Delete opens original confirmation screen",
+    "Delete cancellation restores active menu without removal",
+    "Active keybind registered in Minecraft options",
+    "Original disabled-menu keybind remains registered",
+    "Original config screen receives mob toggle mixin interface",
+    "Independent mob-ticking toggle coexists with original spawning control",
+    "Mob-ticking state updates without changing spawning control",
+    "Active menu survives real rendered frames",
+    "Actual singleplayer integrated server starts with addon",
+    "Player remains far away in Overworld during remote management",
+    "Assigned Active key opens list through actual client/server payloads",
+    "Configure opens original bot configuration across dimensions through actual packets",
+    "Remote mob toggle receives server acknowledgement without enabling natural spawning",
+    "Original remote spawning option works across dimensions and keeps mob flag independent",
+    "Remote deletion retains original confirmation in actual singleplayer session",
+    "Confirmed remote deletion removes Nether bot through original server management",
+    "Remote deletion preserves the other active bot"
+  ],
+  "passed": true,
+  "failure": ""
+}

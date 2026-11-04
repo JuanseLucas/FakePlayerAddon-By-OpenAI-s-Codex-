@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "fakeplayeraddon_client_smoke",
+  "version": "1.0.0",
+  "name": "Addon client smoke test (test only)",
+  "environment": "client",
+  "entrypoints": {"client": ["dev.fakeplayeraddon.tests.ClientSmoke"]},
+  "depends": {"minecraft": "26.3", "fabricloader": ">=0.19.5", "fabric-api": "*", "chunkloader": "2.1.0", "fakeplayeraddon": "*"}
+}

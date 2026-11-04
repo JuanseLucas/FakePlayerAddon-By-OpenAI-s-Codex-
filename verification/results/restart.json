@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "passedCount": 10,
+  "checks": [
+    "Actual server restart retains enabled bot, coordinates, radius, dimension and spawning setting",
+    "Actual server restart retains independent Mob Entity Ticking ON",
+    "Mount villager on boat using vanilla passenger path",
+    "Protection does not mark mobs persistent or remove their vanilla cap eligibility",
+    "Original manager automatically restores bot activation after real server restart",
+    "Restored spawning-OFF bot contributes zero natural-spawning eligible chunks",
+    "villager ticks with server AI after real server restart",
+    "iron_golem ticks with server AI after real server restart",
+    "zombie ticks with server AI after real server restart",
+    "silverfish ticks with server AI after real server restart"
+  ],
+  "observations": {}
+}

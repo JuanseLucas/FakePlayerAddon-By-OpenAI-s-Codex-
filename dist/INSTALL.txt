@@ -1,0 +1,14 @@
+Fakeplayer Chunkloader Addon 1.0.0
+Minecraft Java 26.3 | Fabric Loader 0.19.5+ | Java 25+
+
+Install this jar on both client and dedicated server alongside:
+- Fakeplayer Chunkloader 2.1.0 for Minecraft 26.3
+- Fabric API 0.160.7+26.3 or compatible newer build for 26.3
+
+For singleplayer, install all three mods in the client mods directory.
+Active Bots: F9 by default; configurable in Controls > Key Binds > Miscellaneous.
+Configure opens the original bot configuration.
+Enable Mob Entity Ticking separately from natural spawning for each bot.
+The existing F8 Disabled Bots menu is retained.
+
+The original mod is required and is not bundled.

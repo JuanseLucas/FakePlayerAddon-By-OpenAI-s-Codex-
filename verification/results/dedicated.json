@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "passedCount": 40,
+  "checks": [
+    "Original manager creates industrial bot",
+    "Original radius control remains functional",
+    "Original natural-spawning control remains functional",
+    "Independent ON state coexists with natural spawning OFF",
+    "Controlled area respects radius and dimension",
+    "Mount villager on boat using vanilla passenger path",
+    "Protection does not mark mobs persistent or remove their vanilla cap eligibility",
+    "villager ticks and survives original cleanup while natural spawning is OFF",
+    "villager executes server AI while natural spawning is OFF",
+    "iron_golem ticks and survives original cleanup while natural spawning is OFF",
+    "iron_golem executes server AI while natural spawning is OFF",
+    "zombie ticks and survives original cleanup while natural spawning is OFF",
+    "zombie executes server AI while natural spawning is OFF",
+    "silverfish ticks and survives original cleanup while natural spawning is OFF",
+    "silverfish executes server AI while natural spawning is OFF",
+    "Mounted villager ticks while ON",
+    "ON bot protects distance despawn with a far real-player instance",
+    "Distance despawning outside the bot area retains vanilla behavior",
+    "Peaceful despawning is preserved inside protected areas",
+    "Existing zombie and silverfish count toward vanilla monster mobcap",
+    "Spawning-OFF bot contributes zero actual natural-spawning eligible chunks",
+    "Natural spawning can still be enabled with the original control",
+    "Spawning-ON Fakeplayer contributes normal vanilla spawning eligibility",
+    "Natural spawning can still be disabled with the original control",
+    "Natural ON-to-OFF transition clears eligibility while retaining independent mob ticking",
+    "Mob ticking changes neither vanilla spawnable-chunk ceiling nor existing-monster counts",
+    "villager freezes independently while OFF",
+    "iron_golem freezes independently while OFF",
+    "zombie freezes independently while OFF",
+    "silverfish freezes independently while OFF",
+    "Passenger mob freezes independently while OFF",
+    "villager stays active beyond empty-level inactivity timeout",
+    "iron_golem stays active beyond empty-level inactivity timeout",
+    "zombie stays active beyond empty-level inactivity timeout",
+    "silverfish stays active beyond empty-level inactivity timeout",
+    "Original disable operation remains functional",
+    "Mob ticking setting survives disabling bot",
+    "Original restore operation remains functional",
+    "Mob ticking setting survives restoring bot",
+    "Actual server-written setting reloads from world file"
+  ],
+  "observations": {
+    "runtimeSpawnEligibleChunkCountWithSpawningOff": 0,
+    "vanillaCountedMonsters": 4,
+    "finalMobTicks": [
+      {
+        "alive": true,
+        "type": "villager",
+        "tickCount": 395
+      },
+      {
+        "alive": true,
+        "type": "iron_golem",
+        "tickCount": 395
+      },
+      {
+        "alive": true,
+        "type": "zombie",
+        "tickCount": 395
+      },
+      {
+        "alive": true,
+        "type": "silverfish",
+        "tickCount": 395
+      }
+    ]
+  }
+}
