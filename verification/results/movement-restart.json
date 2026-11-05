@@ -1,0 +1,13 @@
+{
+  "failure": "",
+  "checks": [
+    "Physical movement coordinates survive an actual server restart",
+    "Moved bot retains original owner, radius, appearance and spawning settings after restart",
+    "Movement lock and independent mob flag both survive actual restart",
+    "Original manager restores bot entity at saved moved position",
+    "Restored entity is correctly associated with moved manager key",
+    "Restored bot can be unlocked and moved through server physics",
+    "Movement after restart continues updating saved coordinates"
+  ],
+  "passed": true
+}

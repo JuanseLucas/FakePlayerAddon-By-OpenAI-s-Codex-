@@ -7,5 +7,6 @@ public final class FakeplayerAddonClient implements ClientModInitializer {
     public void onInitializeClient() {
         ActiveBotsClient.init();
         MobTickingClient.init();
+        MovementClient.init();
     }
 }

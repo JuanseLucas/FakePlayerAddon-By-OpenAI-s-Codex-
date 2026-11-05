@@ -18,6 +18,8 @@ public final class MobTickingStoreChecks {
             var industrial = bot("minecraft:overworld", 9, 2, "industrial", true, false);
             var store = new MobTickingStore(file);
             store.initialize(List.of(farm, industrial));
+            check(store.locked(farm) && store.locked(industrial), "Existing bots default to movement locked");
+            store.setLocked(industrial, false);
             check(store.enabled(farm) && !store.enabled(industrial), "Compatible first-load defaults");
 
             var noSpawningFarm = bot(farm.dimension(), 3, -4, "farm", true, false);
@@ -29,6 +31,7 @@ public final class MobTickingStoreChecks {
             store.set(industrial, true);
             store.set(farm, false);
             var loaded = new MobTickingStore(file);
+            check(!loaded.locked(industrial) && loaded.locked(farm), "Movement locks persist independently per bot");
             check(loaded.enabled(industrial) && !loaded.enabled(farm), "Per-bot settings survive reload");
 
             var renamedDisabled = bot(industrial.dimension(), 9, 2, "renamed", false, false);
@@ -44,11 +47,13 @@ public final class MobTickingStoreChecks {
             loaded.initialize(List.of(moved));
             loaded.move(renamedDisabled, moved);
             loaded = new MobTickingStore(file);
+            check(!loaded.locked(moved), "Movement lock follows coordinate and dimension migration");
             check(loaded.enabled(moved) && !loaded.enabled(renamedDisabled),
                     "Coordinate and dimension moves persist the independent setting");
 
             loaded.remove(MobTickingStore.BotKey.of(moved));
             loaded.initialize(List.of(moved));
+            check(loaded.locked(moved), "Deleting a bot clears its saved movement lock");
             check(!new MobTickingStore(file).enabled(moved),
                     "Permanent deletion clears the setting before coordinates are reused");
 
@@ -72,6 +77,8 @@ public final class MobTickingStoreChecks {
             Files.delete(parent);
             Files.writeString(parent, "a file prevents creation of this directory");
             expectIOException(() -> failureStore.set(industrial, true));
+            expectIOException(() -> failureStore.setLocked(industrial, false));
+            check(failureStore.locked(industrial), "Failed save rolls back the in-memory movement lock");
             check(!failureStore.enabled(industrial), "Failed save rolls back the in-memory toggle");
 
             System.out.println("PASS: " + passed + " mob ticking persistence checks");

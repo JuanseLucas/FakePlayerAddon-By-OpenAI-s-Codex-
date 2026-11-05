@@ -1,5 +1,31 @@
 # Validation record
 
+## Version 1.1.0
+
+JAR SHA-256: `19b763f5512bbe99e34bdaf9013625e8edaf358802e54f512d11fcfbe5e78b7a`
+
+The Java 25/Fabric build and fifteen persistence checks pass. Runtime results
+against the 1.1.0 release artifact are recorded in `verification/results/`.
+All **155 checks** pass: 15 persistence, 40 dedicated-server, 10 original
+restart, 14 mob-switch, 32 movement, 7 movement-restart, and 37 rendered
+client/singleplayer checks. Both restart suites use a fully stopped and
+restarted dedicated server.
+
+Movement coverage includes same-chunk and negative-coordinate relocation,
+preserved live identity and configuration, safe source-chunk reuse, occupied
+and out-of-bounds rejection, locked and unlocked physical interactions,
+removal of punch/sneak-click deletion, permission checks in both collision
+directions, absolute/relative spawn commands, and vanilla spawning eligibility
+after movement. The rendered client exercises the three input fields,
+validation, input retention during refresh, Reset, remote Set, and Lock/Unlock
+with actual server acknowledgements. See [MOVEMENT.md](MOVEMENT.md).
+
+The existing mob-switch regression still reports 250 counted monsters before
+and after enabling a nearby spawning bot, with 289 vanilla eligible chunks
+both times. An independent loader clock continues ticking. No original mod
+classes or assets are bundled in the release JAR.
+
+
 ## Version 1.0.1
 
 JAR SHA-256: `6f480fe7abcca1049a4b2dfcdaf8369ce0578f23aa2c338daeecac5792dea2b0`
@@ -10,9 +36,8 @@ client/singleplayer checks pass.
 See [MOBCAP_FIX.md](MOBCAP_FIX.md) and `verification/results/` for the diagnosis
 and before/after records. Current downloads and checksums are in `dist/`.
 
-The detailed 1.0.0 record below is retained as release history. All recorded
-passing runtime results in verification/results/ have also been rerun on 1.0.1,
-except the deliberately failing before-patch regression record.
+The detailed 1.0.0 record below is retained as release history. The runtime records were rerun on 1.0.1 at release time; the current records
+are now from 1.1.0, except the deliberately failing before-patch regression.
 
 ## Original 1.0.0 release record
 

@@ -7,6 +7,8 @@ import de.chunkloader.network.ChunkMapData;
 import de.chunkloader.network.payload.DisabledChunkloadersListPayload.DisabledChunkloaderEntry;
 import dev.fakeplayeraddon.client.ActiveBotsScreen;
 import dev.fakeplayeraddon.client.MobTickingView;
+import dev.fakeplayeraddon.client.MovementView;
+import dev.fakeplayeraddon.network.MovementState;
 import dev.fakeplayeraddon.network.MobTickingState;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -109,9 +111,33 @@ public final class ClientSmoke implements ClientModInitializer {
                 && labels(screen).contains("Disable mob spawning")) {
             check(labels(screen).contains("Enable Mob Entity Ticking"),
                     "Original remote spawning option works across dimensions and keeps mob flag independent");
-            transitionAt = System.currentTimeMillis();
-            openByKey(client);
-            phase = 9;
+            search(screen,"Move bot to");
+            coordinates(screen,"500","75","-500");
+            transitionAt=System.currentTimeMillis();phase=40;
+        } else if(phase==40 && System.currentTimeMillis()-transitionAt>400
+                && client.gui.screen() instanceof ChunkMapScreen screen && button(screen,"Set").active) {
+            button(screen,"Set").onPress(new KeyEvent(0,0,0));phase=41;
+        } else if(phase==41 && client.gui.screen() instanceof ChunkMapScreen screen
+                && screen.getData().fakeplayerChunkX()==31 && screen.getData().fakeplayerChunkZ()==-32) {
+            check(screen.getData().fakeplayerBlockX()==500 && screen.getData().blockY()==75 && screen.getData().fakeplayerBlockZ()==-500,
+                    "Set teleports remote bot to X/Y/Z and retargets the same original configuration session");
+            search(screen,"Move bot to");coordinates(screen,"999","100","999");
+            button(screen,"Reset").onPress(new KeyEvent(0,0,0));
+            check(coordinateFields(screen).stream().allMatch(field->field.getValue().isEmpty()),"Reset clears all coordinate inputs after remote move");
+            check(screen.getData().fakeplayerBlockX()==500 && screen.getData().fakeplayerBlockZ()==-500,"Reset does not teleport bot or alter its coordinates");
+            search(screen,"Lock");transitionAt=System.currentTimeMillis();phase=42;
+        } else if(phase==42 && System.currentTimeMillis()-transitionAt>400
+                && client.gui.screen() instanceof ChunkMapScreen screen && labels(screen).contains("Unlock bot") && button(screen,"Unlock bot").active) {
+            button(screen,"Unlock bot").onPress(new KeyEvent(0,0,0));phase=43;
+        } else if(phase==43 && client.gui.screen() instanceof ChunkMapScreen screen && labels(screen).contains("Lock bot")) {
+            check(true,"Unlock button applies and receives actual server acknowledgement across dimensions");
+            transitionAt=System.currentTimeMillis();phase=44;
+        } else if(phase==44 && System.currentTimeMillis()-transitionAt>400
+                && client.gui.screen() instanceof ChunkMapScreen screen && button(screen,"Lock bot").active) {
+            button(screen,"Lock bot").onPress(new KeyEvent(0,0,0));phase=45;
+        } else if(phase==45 && client.gui.screen() instanceof ChunkMapScreen screen && labels(screen).contains("Unlock bot")) {
+            check(screen.getData().enabled(),"Lock button reanchors bot without disabling or deleting it");
+            transitionAt=System.currentTimeMillis();openByKey(client);phase=9;
         } else if (phase == 9 && System.currentTimeMillis() - transitionAt > 400
                 && client.gui.screen() instanceof ActiveBotsScreen screen
                 && labels(screen).stream().filter("Configure"::equals).count() >= 2) {
@@ -140,6 +166,18 @@ public final class ClientSmoke implements ClientModInitializer {
     private void search(Screen screen, String query) {
         screen.children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast)
                 .findFirst().orElseThrow().setValue(query);
+    }
+
+    private List<EditBox> coordinateFields(Screen screen) {
+        return Arrays.stream(new String[]{"X","Y","Z"}).map(axis->screen.children().stream().filter(EditBox.class::isInstance)
+            .map(EditBox.class::cast).filter(field->field.getMessage().getString().equals(axis)).findFirst().orElseThrow()).toList();
+    }
+    private void coordinates(Screen screen,String x,String y,String z) {
+        var fields=coordinateFields(screen);fields.get(0).setValue(x);fields.get(1).setValue(y);fields.get(2).setValue(z);
+    }
+    private void layout(ChunkMapScreen screen) {
+        try {var method=ChunkMapScreen.class.getDeclaredMethod("updateButtonPositions");method.setAccessible(true);method.invoke(screen);}
+        catch(Exception e){throw new AssertionError(e);}
     }
 
     private void run(Minecraft client) {
@@ -182,7 +220,7 @@ public final class ClientSmoke implements ClientModInitializer {
                 "Original disabled-menu keybind remains registered");
 
         var data = new ChunkMapData("SmokeBot", true, false, 0, 0, 64, 2, 2, 2, 3,
-                0, 0, 0, 0, "minecraft:overworld", List.of(), 0, 0, 8, 8,
+                9, 9, 0, 0, "minecraft:overworld", List.of(), 0, 0, 8, 8,
                 0L, 0F, "SmokeBot", true, false, false, true, List.of(), "", false, false);
         var configuration = new ChunkMapScreen(data);
         configuration.init(1280, 720);
@@ -194,6 +232,23 @@ public final class ClientSmoke implements ClientModInitializer {
         check(labels(configuration).contains("Disable Mob Entity Ticking")
                         && labels(configuration).contains("Enable mob spawning"),
                 "Mob-ticking state updates without changing spawning control");
+        check(configuration instanceof MovementView,"Move and lock controls are integrated in original bot screen");
+        ((MovementView)configuration).fakeplayeraddon$movementState(new MovementState(0,0,"minecraft:overworld",true,true,""));
+        search(configuration,"Movement");layout(configuration);
+        check(coordinateFields(configuration).size()==3,"Separate native X Y Z coordinate boxes exist inside configuration");
+        check(!button(configuration,"Set").active,"Set is disabled for empty coordinates");
+        coordinates(configuration,"123","70","456");layout(configuration);
+        check(button(configuration,"Set").active,"Set enables for valid complete coordinates");
+        coordinates(configuration,"invalid","70","456");layout(configuration);
+        check(!button(configuration,"Set").active,"Invalid coordinate text cannot be submitted");
+        coordinates(configuration,"123","70","456");
+        var previous=coordinateFields(configuration).get(0);
+        search(configuration,"Lock");search(configuration,"Movement");layout(configuration);
+        check(coordinateFields(configuration).get(0)==previous && previous.getValue().equals("123"),"Coordinate text boxes survive original action-list rebuilds");
+        button(configuration,"Reset").onPress(new KeyEvent(0,0,0));
+        check(coordinateFields(configuration).stream().allMatch(field->field.getValue().isEmpty()),"Reset clears all three input boxes locally");
+        check(!button(configuration,"Set").active,"Reset leaves Set disabled until coordinates are entered");
+        check(labels(configuration).contains("Unlock bot"),"Locked state exposes Unlock bot control");
         search.setValue("");
     }
 

@@ -3,16 +3,17 @@
 A separate client-and-server Fabric addon for Minecraft Java **26.3** and
 **Fakeplayer Chunkloader 2.1.0**. Java **25** is required.
 
-Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.1.jar) or
-[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.0.1.zip).
+Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.0.jar) or
+[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.0.zip).
 Checksums are in [dist/SHA256SUMS](dist/SHA256SUMS).
 
-**1.0.1 fixes independent chunkloader ticking and mob-switch compatibility.**
-See [diagnosis, patch scope, and regression evidence](MOBCAP_FIX.md).
+**1.1.0 adds coordinate movement and persistent bot locking inside the original configuration screen.**
+See [movement controls and commands](MOVEMENT.md). The independent-loader and
+mob-switch fixes from 1.0.1 remain included; see [diagnosis and regression evidence](MOBCAP_FIX.md).
 
 ## Validation
 
-The full Java 25/Fabric build and all ten persistence checks pass. Actual
+The full Java 25/Fabric build and all fifteen persistence checks pass. Actual
 Minecraft 26.3 dedicated-server checks verify mob AI and cleanup protection,
 mounted-mob ON/OFF behavior, empty-dimension ticking, vanilla monster counting,
 zero natural-spawning eligibility with spawning OFF, both spawning-mode
@@ -34,6 +35,17 @@ opens the active list across dimensions. Configure opens the original bot
 configuration screen; Delete uses its permanent-deletion confirmation. Original
 permissions and ownership checks apply. The original F8 disabled-bot menu keeps
 its existing behavior.
+
+The original configuration screen also includes **Move bot to:** with separate
+X/Y/Z boxes, **Reset**, **Set**, and **Unlock bot / Lock bot**. Reset clears the
+inputs; Set moves the bot within its current dimension. Bots default to locked.
+Unlocked bots can be moved by authorized punches or player collisions. Physical
+punching and sneak-right-clicking no longer disable or delete bots; use the
+configuration and management menus. Both normal and sneaking right-click open
+the original configuration screen.
+
+Create a bot at specific coordinates with `/fakeplayer add 100 64 -200` or
+`/fp add ~5 ~ ~`. The original `/fakeplayer add` still works.
 
 The bot configuration screen gains an independent mob entity ticking control.
 Natural spawning is still controlled by the original mod's spawning option.

@@ -1,5 +1,5 @@
 {
-  "passed": true,
+  "failure": "",
   "checks": [
     "Original F8 widgets retain Edit, Restore, Delete, Close",
     "Active menu has Configure, Delete, Close and removes Edit/Restore",
@@ -14,6 +14,15 @@
     "Original config screen receives mob toggle mixin interface",
     "Independent mob-ticking toggle coexists with original spawning control",
     "Mob-ticking state updates without changing spawning control",
+    "Move and lock controls are integrated in original bot screen",
+    "Separate native X Y Z coordinate boxes exist inside configuration",
+    "Set is disabled for empty coordinates",
+    "Set enables for valid complete coordinates",
+    "Invalid coordinate text cannot be submitted",
+    "Coordinate text boxes survive original action-list rebuilds",
+    "Reset clears all three input boxes locally",
+    "Reset leaves Set disabled until coordinates are entered",
+    "Locked state exposes Unlock bot control",
     "Active menu survives real rendered frames",
     "Actual singleplayer integrated server starts with addon",
     "Player remains far away in Overworld during remote management",
@@ -21,9 +30,14 @@
     "Configure opens original bot configuration across dimensions through actual packets",
     "Remote mob toggle receives server acknowledgement without enabling natural spawning",
     "Original remote spawning option works across dimensions and keeps mob flag independent",
+    "Set teleports remote bot to X/Y/Z and retargets the same original configuration session",
+    "Reset clears all coordinate inputs after remote move",
+    "Reset does not teleport bot or alter its coordinates",
+    "Unlock button applies and receives actual server acknowledgement across dimensions",
+    "Lock button reanchors bot without disabling or deleting it",
     "Remote deletion retains original confirmation in actual singleplayer session",
     "Confirmed remote deletion removes Nether bot through original server management",
     "Remote deletion preserves the other active bot"
   ],
-  "failure": ""
+  "passed": true
 }

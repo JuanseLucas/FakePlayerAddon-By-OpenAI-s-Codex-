@@ -25,6 +25,7 @@ public final class MobTickingStore {
 
     private final Path file;
     private final Map<BotKey, Boolean> settings = new HashMap<>();
+    private final Map<BotKey, Boolean> movementLocks = new HashMap<>();
 
     public MobTickingStore(Path file) throws IOException {
         this.file = file;
@@ -39,6 +40,9 @@ public final class MobTickingStore {
                     settings.put(new BotKey(entry.get("dimension").getAsString(),
                             entry.get("chunkX").getAsInt(), entry.get("chunkZ").getAsInt()),
                             entry.get("mobEntityTicking").getAsBoolean());
+                    movementLocks.put(new BotKey(entry.get("dimension").getAsString(),
+                            entry.get("chunkX").getAsInt(), entry.get("chunkZ").getAsInt()),
+                            !entry.has("movementLocked") || entry.get("movementLocked").getAsBoolean());
                 }
             } catch (RuntimeException exception) {
                 throw new IOException("Invalid mob ticking data; original file retained: " + file, exception);
@@ -63,6 +67,19 @@ public final class MobTickingStore {
         return settings.getOrDefault(BotKey.of(bot), bot.allowMobSpawning());
     }
 
+    public boolean locked(ChunkloaderTarget bot) {
+        return movementLocks.getOrDefault(BotKey.of(bot), true);
+    }
+
+    public void setLocked(ChunkloaderTarget bot, boolean locked) throws IOException {
+        BotKey key = BotKey.of(bot);
+        Boolean previous = movementLocks.put(key, locked);
+        try { save(); } catch (IOException exception) {
+            if (previous == null) movementLocks.remove(key); else movementLocks.put(key, previous);
+            throw exception;
+        }
+    }
+
     public void set(ChunkloaderTarget bot, boolean enabled) throws IOException {
         BotKey key = BotKey.of(bot);
         Boolean previous = settings.put(key, enabled);
@@ -80,6 +97,9 @@ public final class MobTickingStore {
         BotKey to = BotKey.of(newBot);
         if (from.equals(to)) return;
         var before = new HashMap<>(settings);
+        var locksBefore = new HashMap<>(movementLocks);
+        movementLocks.put(to, locked(previousBot));
+        movementLocks.remove(from);
         settings.put(to, enabled(previousBot));
         settings.remove(from);
         try {
@@ -87,17 +107,21 @@ public final class MobTickingStore {
         } catch (IOException exception) {
             settings.clear();
             settings.putAll(before);
+            movementLocks.clear();
+            movementLocks.putAll(locksBefore);
             throw exception;
         }
     }
 
     public void remove(BotKey key) throws IOException {
         Boolean previous = settings.remove(key);
+        Boolean previousLock = movementLocks.remove(key);
         if (previous == null) return;
         try {
             save();
         } catch (IOException exception) {
             settings.put(key, previous);
+            if (previousLock != null) movementLocks.put(key, previousLock);
             throw exception;
         }
     }
@@ -115,6 +139,7 @@ public final class MobTickingStore {
             bot.addProperty("chunkX", entry.getKey().x());
             bot.addProperty("chunkZ", entry.getKey().z());
             bot.addProperty("mobEntityTicking", entry.getValue());
+            bot.addProperty("movementLocked", movementLocks.getOrDefault(entry.getKey(), true));
             bots.add(bot);
         });
         root.add("bots", bots);

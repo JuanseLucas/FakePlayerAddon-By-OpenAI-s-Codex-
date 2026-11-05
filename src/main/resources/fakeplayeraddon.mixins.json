@@ -4,6 +4,10 @@
   "package": "dev.fakeplayeraddon.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "common.BotCollisionMixin",
+    "common.BotRelocationManagerMixin",
+    "common.FakePlayerMovementMixin",
+    "common.BotInteractionMixin",
     "common.ChunkTicketAccess",
     "common.TicketStorageAccess",
     "common.IndependentTickingLevelMixin",
@@ -15,6 +19,7 @@
     "common.MobDistanceDespawnMixin"
   ],
   "client": [
+    "client.MovementScreenMixin",
     "client.DisabledScreenAccess",
     "client.DisabledScreenTextMixin",
     "client.MobTickingScreenMixin"
