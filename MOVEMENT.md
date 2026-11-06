@@ -51,7 +51,12 @@ The original no-argument command remains available. Coordinates extend it:
 
 The command uses its execution dimension and supports vanilla absolute,
 relative (`~`), and local (`^`) block-position arguments. It retains the
-original permission, creation limits, owner assignment, and overlap rules.
+original permission, creation limits, and owner assignment. Since 1.2.0,
+coverage may overlap between bots in different chunks; an active or disabled
+bot already occupying the destination chunk still prevents creation.
+
+Bots do not travel through portals. Coordinate Set and physical movement keep
+the bot in its current dimension.
 
 ## Compatibility and validation
 
