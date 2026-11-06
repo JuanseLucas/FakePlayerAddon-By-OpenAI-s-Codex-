@@ -1,1 +1,0 @@
-Fabric 26.3 addon for Fakeplayer Chunkloader 2.1.0: F9 active-bot management, remote configuration/deletion, independent mob ticking, move/lock controls, custom radii and overlapping coverage, plus mob-switch fixes. Removes punch/sneak-click deletion and bot-triggered sieges, patrols and horse traps. Full additions, fixes and removals in README.
