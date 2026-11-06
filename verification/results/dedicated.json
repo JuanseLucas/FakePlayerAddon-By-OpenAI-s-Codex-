@@ -45,27 +45,27 @@
   ],
   "observations": {
     "runtimeSpawnEligibleChunkCountWithSpawningOff": 0,
-    "vanillaCountedMonsters": 12,
+    "vanillaCountedMonsters": 18,
     "finalMobTicks": [
       {
-        "type": "villager",
+        "tickCount": 395,
         "alive": true,
-        "tickCount": 395
+        "type": "villager"
       },
       {
-        "type": "iron_golem",
+        "tickCount": 395,
         "alive": true,
-        "tickCount": 395
+        "type": "iron_golem"
       },
       {
-        "type": "zombie",
+        "tickCount": 395,
         "alive": true,
-        "tickCount": 395
+        "type": "zombie"
       },
       {
-        "type": "silverfish",
+        "tickCount": 395,
         "alive": true,
-        "tickCount": 395
+        "type": "silverfish"
       }
     ]
   }

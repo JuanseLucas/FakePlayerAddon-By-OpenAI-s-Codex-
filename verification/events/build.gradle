@@ -10,7 +10,7 @@ dependencies {
     implementation 'net.fabricmc:fabric-loader:0.19.5'
     implementation 'net.fabricmc.fabric-api:fabric-api:0.160.7+26.3'
     implementation files(providers.gradleProperty('chunkloaderJar').getOrElse('../../libs/fakeplayerchunkloader26.3-fabric-2.1.0.jar'))
-    implementation files(providers.gradleProperty('addonJar').getOrElse('../../build/libs/fakeplayer-chunkloader-addon-26.3-1.1.1.jar'))
+    implementation files(providers.gradleProperty('addonJar').getOrElse('../../build/libs/fakeplayer-chunkloader-addon-26.3-1.2.0.jar'))
 }
 loom {
     enableModProvidedJavadoc = false

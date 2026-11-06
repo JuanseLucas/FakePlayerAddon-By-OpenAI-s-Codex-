@@ -34,18 +34,26 @@ public final class ClientSmoke implements ClientModInitializer {
     private boolean done;
     private ActiveBotsScreen active;
     private int phase;
+    private int radiusTarget;
     private long transitionAt;
     private long started = System.currentTimeMillis();
     private volatile boolean fixtureReady;
     private volatile Throwable fixtureFailure;
+    private volatile net.minecraft.world.level.block.entity.HopperBlockEntity radiusClock;
+    private volatile boolean radiusClockTicked;
 
     @Override public void onInitializeClient() {
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server->{
+            if(radiusClock!=null && radiusClock.getItem(0).getCount()<64)radiusClockTicked=true;
+        });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (done || client.gui.overlay() != null || ++ticks < 40) return;
             try {
                 if (System.currentTimeMillis() - started > 180000) throw new AssertionError("Client integration timed out at phase " + phase);
                 if (ticks == 40) run(client);
                 if (ticks == 80) {
+                    client.options.renderDistance().set(2);
+                    client.options.simulationDistance().set(5);
                     check(client.gui.screen() == active, "Active menu survives real rendered frames");
                     phase = 1;
                     client.createWorldOpenFlows().openWorld("addon-smoke", () -> finish(client,
@@ -72,6 +80,11 @@ public final class ClientSmoke implements ClientModInitializer {
                         throw new AssertionError("Cannot create Nether fixture");
                     }
                     manager.setChunkloaderAllowMobSpawning("RemoteNether", false);
+                    var clockPos=new BlockPos(424,80,328);
+                    nether.setBlock(clockPos.below(),net.minecraft.world.level.block.Blocks.CHEST.defaultBlockState(),3);
+                    nether.setBlock(clockPos,net.minecraft.world.level.block.Blocks.HOPPER.defaultBlockState(),3);
+                    radiusClock=(net.minecraft.world.level.block.entity.HopperBlockEntity)nether.getBlockEntity(clockPos);
+                    radiusClock.setItem(0,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SUGAR_CANE,64));
                     fixtureReady = true;
                 } catch (Throwable failure) { fixtureFailure = failure; }
             });
@@ -111,6 +124,28 @@ public final class ClientSmoke implements ClientModInitializer {
                 && labels(screen).contains("Disable mob spawning")) {
             check(labels(screen).contains("Enable Mob Entity Ticking"),
                     "Original remote spawning option works across dimensions and keeps mob flag independent");
+            search(screen,"Simulation distance");
+            radiusTarget=screen.getData().chunkRadius();transitionAt=System.currentTimeMillis();phase=60;
+        } else if(phase==60 && System.currentTimeMillis()-transitionAt>400
+                && client.gui.screen() instanceof ChunkMapScreen screen && button(screen,"SD +1").active) {
+            radiusTarget++;button(screen,"SD +1").onPress(new KeyEvent(0,0,0));phase=61;
+        } else if(phase==61 && client.gui.screen() instanceof ChunkMapScreen screen && screen.getData().chunkRadius()==radiusTarget) {
+            if(radiusTarget<6){transitionAt=System.currentTimeMillis();phase=60;}
+            else {
+                check(screen.getData().canIncreaseRadius(),"Existing radius plus button remains available beyond radius three");
+                check(labels(screen).contains("SD +1") && labels(screen).contains("SD -1"),"Custom radius reuses original buttons without a separate radius control");
+                transitionAt=System.currentTimeMillis();phase=62;
+            }
+        } else if(phase==62 && System.currentTimeMillis()-transitionAt>400
+                && radiusClockTicked && client.gui.screen() instanceof ChunkMapScreen screen && button(screen,"SD -1").active) {
+            check(client.options.renderDistance().get()==2 && client.getSingleplayerServer().getPlayerList().getSimulationDistance()==5,
+                    "Integrated test uses host render distance two and simulation distance five");
+            check(true,"Integrated server ticks remote radius-six edge hopper beyond both host distances");
+            button(screen,"SD -1").onPress(new KeyEvent(0,0,0));phase=63;
+        } else if(phase==63 && client.gui.screen() instanceof ChunkMapScreen screen && screen.getData().chunkRadius()==5) {
+            check(true,"Original radius decrement applies after increasing beyond three through actual packets");
+            search(screen,"");
+            check(labels(screen).contains("Enable Mob Entity Ticking"),"Radius edits leave independent mob ticking unchanged");
             search(screen,"Move bot to");
             coordinates(screen,"500","75","-500");
             transitionAt=System.currentTimeMillis();phase=40;

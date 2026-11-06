@@ -4,6 +4,9 @@
   "package": "dev.fakeplayeraddon.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "common.RadiusManagerMixin",
+    "common.RadiusConfigMixin",
+    "common.RadiusCommandMixin",
     "common.BotSiegeMixin",
     "common.BotPatrolMixin",
     "common.BotSkeletonTrapMixin",
@@ -22,6 +25,7 @@
     "common.MobDistanceDespawnMixin"
   ],
   "client": [
+    "client.RadiusScreenMixin",
     "client.MovementScreenMixin",
     "client.DisabledScreenAccess",
     "client.DisabledScreenTextMixin",

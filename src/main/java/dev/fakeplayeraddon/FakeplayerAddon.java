@@ -15,5 +15,6 @@ public final class FakeplayerAddon implements ModInitializer {
         MobTicking.init();
         MovementNetworking.init();
         MovementCommands.init();
+        dev.fakeplayeraddon.loading.BotChunkTickets.init();
     }
 }

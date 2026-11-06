@@ -79,14 +79,8 @@ public abstract class BotRelocationManagerMixin implements MovableBots {
         if(!from.equals(to)) {
             cancelPendingChunkloader(from);
             int radius=getEffectiveTicketSimulationRadius(old);
-            // TicketStorage deduplicates equal type/level tickets. Remove first,
-            // then restore all remaining owners before adding the destination.
+            // Shared tickets retain their other owners when this bot relocates.
             removeAllChunkloaderTickets(world,new ChunkPos(old.chunkX(),old.chunkZ()),old,radius);
-            for(var other:activeTargets.values()) {
-                if((other.chunkX()!=old.chunkX() || other.chunkZ()!=old.chunkZ())
-                        && other.enabled() && other.dimension().equals(old.dimension()))
-                    addChunkloaderTickets(world,new ChunkPos(other.chunkX(),other.chunkZ()),other,getEffectiveTicketSimulationRadius(other));
-            }
             addChunkloaderTickets(world,new ChunkPos(cx,cz),next,radius);
             activeFakePlayers.remove(from);
             activeFakePlayers.put(to,body);

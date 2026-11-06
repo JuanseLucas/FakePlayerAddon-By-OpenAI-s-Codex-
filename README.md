@@ -3,11 +3,16 @@
 A separate client-and-server Fabric addon for Minecraft Java **26.3** and
 **Fakeplayer Chunkloader 2.1.0**. Java **25** is required.
 
-Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.1.jar) or
-[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.1.zip).
+Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.2.0.jar) or
+[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.2.0.zip).
 Checksums are in [dist/SHA256SUMS](dist/SHA256SUMS).
 
-**1.1.1 excludes bots from triggering zombie sieges, pillager patrols, and skeleton horse traps.**
+**1.2.0 extends the original radius buttons beyond 3 and allows overlapping bot coverage.**
+Each bot retains its own chunk ownership, so shared chunks remain active when
+another bot moves, changes radius, is disabled, or is deleted. No new radius
+button is added. See [radius, overlap, and LAN behavior](COVERAGE.md).
+
+1.1.1 excludes bots from triggering zombie sieges, pillager patrols, and skeleton horse traps.
 Real-player events and normal configured bot spawning remain intact. See
 [event exclusions and scope](EVENT_EXCLUSIONS.md).
 

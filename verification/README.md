@@ -2,7 +2,7 @@
 
 These separate Fabric test mods exercise the addon in actual Minecraft 26.3.
 They are not bundled in the addon JAR. Recorded passing results are in `results/`:
-40 dedicated checks, 10 original real-restart checks, and 37 rendered
+40 dedicated checks, 10 original real-restart checks, and 43 rendered
 client/singleplayer checks. The root project's JUnit suite also runs 15
 persistence checks. Version 1.1.0 adds 32 movement checks and a separate real
 movement-restart run with 7 checks under `movement/`.
@@ -12,8 +12,9 @@ Run that project with the same jar properties and isolated server preparation
 as the dedicated project, on a fresh world. Its `run/mobcap-results.json`
 must report `passed: true`. The recorded `mobcap-before-patch.json` deliberately
 contains the expected failure from addon 1.0.0, not a current failing test.
-The existing 14 mob-switch checks also run against 1.1.1. All 182 checks pass
-including the root persistence assertions and 27 event assertions.
+The existing 14 mob-switch checks also run against 1.2.0. All 246 checks pass
+including the root persistence assertions, 27 event assertions, 43 coverage
+checks and 15 coverage/restart checks.
 
 Use Java 25 and first build the addon as described in the root README. Each
 harness accepts `-PchunkloaderJar=/absolute/path/to/original.jar` and optionally
@@ -90,3 +91,22 @@ assertion count. A negative control uses the same harness with
 `-PaddonJar=/absolute/path/to/1.1.0.jar`; its expected failures are recorded
 separately. The harness creates and removes fixture bots and POIs, so use only
 its own test save. See [event scope](../EVENT_EXCLUSIONS.md).
+
+## Radius and overlapping coverage
+
+The 1.2.0 `coverage/` harness creates overlapping fixture bots and checks actual
+vanilla ticket storage, native hoppers and mobs, command placement, extended
+radii, ownership transitions, and original config loading. Prepare only its
+generated `coverage/run/` with `coverage/server.properties.example` and the
+EULA for that isolated server, then run sequentially:
+
+```sh
+./gradlew -p verification/coverage runServer -PchunkloaderJar=/absolute/path/to/original.jar
+./gradlew -p verification/coverage runServer -PrestartCheck=true -PchunkloaderJar=/absolute/path/to/original.jar
+```
+
+Both `coverage-results.json` and `coverage-restart-results.json` in its run
+directory must report `passed: true`. The large-radius test intentionally uses
+a small world border; see [coverage scope](../COVERAGE.md). The client harness
+adds original radius-button packet tests and a remote hopper beyond the host's
+render/simulation distances. Do not use these harnesses with a personal save.

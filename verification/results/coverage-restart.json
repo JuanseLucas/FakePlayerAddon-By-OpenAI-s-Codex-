@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "checks": [
+    "Radius forty survives an actual server restart",
+    "Restart retains moved bot coordinates and dimension",
+    "Restart retains independent mob ticking and spawning OFF",
+    "Restart retains movement lock",
+    "Restart restores valid owned tickets for radius greater than thirty-one",
+    "Restarted large-radius spawning-OFF bot adds no natural-spawning eligibility",
+    "Restored configuration keeps the existing radius-up control available",
+    "Deleted overlapping bot remains deleted after restart",
+    "Restored large-radius bot accepts a new bot inside its coverage",
+    "Existing radius-up button remains enabled with another bot inside coverage",
+    "Original increment and decrement actions work with overlapping large-radius bots",
+    "Two overlapping spawning-ON bots contribute the vanilla union of eligible chunks without double counting",
+    "Turning one overlapping bot spawning OFF leaves only the other bot\u0027s vanilla eligibility",
+    "Turning both overlapping bots spawning OFF clears all natural eligibility",
+    "Removing new overlap retains restored bot tickets and zero spawning eligibility"
+  ],
+  "observations": {},
+  "failure": ""
+}

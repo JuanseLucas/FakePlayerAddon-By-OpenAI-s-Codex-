@@ -1,5 +1,43 @@
 # Validation record
 
+## Version 1.2.0
+
+JAR SHA-256: `dc4fad6143943d65bd5a0ecc382cbbf1114a823644cdc1b4b84b5e6a0e0d5cb5`
+
+All **246 checks** pass against the release artifact: 15 persistence, 40
+dedicated-server, 10 original restart, 14 mob-switch, 32 movement, 7
+movement-restart, 43 rendered client/singleplayer, 27 hostile-event, 43 new
+coverage, and 15 coverage/restart assertions. The latest runtime records are
+in `verification/results/`; deliberately failing historical before-patch
+records remain separate.
+
+The coverage harness checks actual vanilla ticket storage and native hopper
+and mob ticking for overlapping radius-four and radius-five bots. It covers
+original and coordinate add commands, same-chunk rejection, radius actions
+and command parsing above three, mixed mob-ticking flags, disable/restore,
+shrink/grow, relocation, deletion, and overflow rejection. The initial pair
+owns 99 distinct core chunks. Shared chunks continue ticking after either
+owner changes; chunks with no remaining owner pause.
+
+Radius 40 is tested with a small world border: legal ticket levels, clipping,
+continued native ticking, original config loading, and actual restart all
+pass. After restart, the existing radius actions work while coverage overlaps.
+Two spawning-ON bots at offsets (3,1) report the vanilla union of **354**
+eligible chunks; disabling spawning on one returns **289**, and on both **0**.
+The independent mob-switch regression remains at 250 counted monsters.
+
+A rendered integrated server increases the original SD buttons to radius 6
+and decreases again through actual packets. A remote edge hopper ticks with
+host render distance 2 and simulation distance 5. All prior client menu,
+movement, locking, remote configuration/deletion, and original F8 checks pass.
+
+See [COVERAGE.md](COVERAGE.md) for scope and practical bounds. These checks do
+not benchmark an entire radius-40 world, establish a recommended maximum, or
+exercise multiple external LAN clients. Bot ticket logic is shared between
+dedicated and integrated servers. No environment configuration was changed
+or published.
+
+
 ## Version 1.1.1
 
 JAR SHA-256: `6ce193b38b3fb8f330b0a922c8d8df497aa6ab881d7ce58b8a2a34f2052e089e`
@@ -35,7 +73,7 @@ JAR SHA-256: `19b763f5512bbe99e34bdaf9013625e8edaf358802e54f512d11fcfbe5e78b7a`
 
 The Java 25/Fabric build and fifteen persistence checks pass. Runtime results
 were recorded against the 1.1.0 release artifact at release time and have now
-been refreshed for 1.1.1 in `verification/results/`.
+been refreshed for 1.2.0 in `verification/results/`.
 All **155 checks** pass: 15 persistence, 40 dedicated-server, 10 original
 restart, 14 mob-switch, 32 movement, 7 movement-restart, and 37 rendered
 client/singleplayer checks. Both restart suites use a fully stopped and
@@ -67,7 +105,7 @@ See [MOBCAP_FIX.md](MOBCAP_FIX.md) and `verification/results/` for the diagnosis
 and before/after records. Current downloads and checksums are in `dist/`.
 
 The detailed 1.0.0 record below is retained as release history. The runtime records were rerun on 1.0.1 at release time; the current records
-are now from 1.1.1, except the deliberately failing historical regression controls.
+are now from 1.2.0, except the deliberately failing historical regression controls.
 
 ## Original 1.0.0 release record
 

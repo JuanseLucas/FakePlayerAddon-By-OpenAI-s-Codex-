@@ -1,4 +1,5 @@
 {
+  "passed": true,
   "failure": "",
   "checks": [
     "Original F8 widgets retain Edit, Restore, Delete, Close",
@@ -30,6 +31,12 @@
     "Configure opens original bot configuration across dimensions through actual packets",
     "Remote mob toggle receives server acknowledgement without enabling natural spawning",
     "Original remote spawning option works across dimensions and keeps mob flag independent",
+    "Existing radius plus button remains available beyond radius three",
+    "Custom radius reuses original buttons without a separate radius control",
+    "Integrated test uses host render distance two and simulation distance five",
+    "Integrated server ticks remote radius-six edge hopper beyond both host distances",
+    "Original radius decrement applies after increasing beyond three through actual packets",
+    "Radius edits leave independent mob ticking unchanged",
     "Set teleports remote bot to X/Y/Z and retargets the same original configuration session",
     "Reset clears all coordinate inputs after remote move",
     "Reset does not teleport bot or alter its coordinates",
@@ -38,6 +45,5 @@
     "Remote deletion retains original confirmation in actual singleplayer session",
     "Confirmed remote deletion removes Nether bot through original server management",
     "Remote deletion preserves the other active bot"
-  ],
-  "passed": true
+  ]
 }
