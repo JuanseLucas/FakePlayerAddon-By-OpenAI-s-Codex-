@@ -2,13 +2,16 @@ package dev.fakeplayeraddon.mixin.client;
 
 import de.chunkloader.client.screen.ChunkMapScreen;
 import de.chunkloader.network.ChunkMapData;
+
 import dev.fakeplayeraddon.client.MobTickingClient;
 import dev.fakeplayeraddon.client.MobTickingView;
 import dev.fakeplayeraddon.network.MobTickingState;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,27 +36,38 @@ public abstract class MobTickingScreenMixin extends Screen implements MobTicking
     @Unique private Boolean fakeplayeraddon$mobTicking;
     @Unique private boolean fakeplayeraddon$pending;
 
-    protected MobTickingScreenMixin(Component title) { super(title); }
+    protected MobTickingScreenMixin(Component title) {
+        super(title);
+    }
 
-    @Shadow private boolean actionSearchMatches(String label) { throw new AssertionError(); }
-    @Shadow private void buildActionButtons() { throw new AssertionError(); }
+    @Shadow
+    private boolean actionSearchMatches(String label) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    private void buildActionButtons() {
+        throw new AssertionError();
+    }
 
     @Inject(method = "updateData", at = @At("HEAD"))
     private void fakeplayeraddon$invalidateChangedBot(ChunkMapData next, CallbackInfo ci) {
-        if (data == null || data.fakeplayerChunkX() != next.fakeplayerChunkX()
+        if (data == null
+                || data.fakeplayerChunkX() != next.fakeplayerChunkX()
                 || data.fakeplayerChunkZ() != next.fakeplayerChunkZ()
                 || !java.util.Objects.equals(data.dimensionKey(), next.dimensionKey())) {
             fakeplayeraddon$mobTicking = null;
             fakeplayeraddon$pending = false;
-            MobTickingClient.request(next.fakeplayerChunkX(), next.fakeplayerChunkZ(),
-                    next.dimensionKey(), -1);
+            MobTickingClient.request(
+                    next.fakeplayerChunkX(), next.fakeplayerChunkZ(), next.dimensionKey(), -1);
         }
     }
 
     @Inject(method = "init", at = @At("TAIL"))
     private void fakeplayeraddon$queryState(CallbackInfo ci) {
-        if (data != null) MobTickingClient.request(data.fakeplayerChunkX(), data.fakeplayerChunkZ(),
-                data.dimensionKey(), -1);
+        if (data != null)
+            MobTickingClient.request(
+                    data.fakeplayerChunkX(), data.fakeplayerChunkZ(), data.dimensionKey(), -1);
     }
 
     @Inject(method = "buildActionButtons", at = @At("TAIL"))
@@ -62,15 +76,26 @@ public abstract class MobTickingScreenMixin extends Screen implements MobTicking
         boolean enabled = Boolean.TRUE.equals(fakeplayeraddon$mobTicking);
         String label = (enabled ? "Disable" : "Enable") + " Mob Entity Ticking";
         if (!actionSearchMatches(label) && !actionSearchMatches("Mode")) return;
-        Button button = Button.builder(Component.literal(label).withStyle(
-                        enabled ? ChatFormatting.BLUE : ChatFormatting.GREEN), clicked -> {
-                    fakeplayeraddon$pending = true;
-                    clicked.active = false;
-                    if (!MobTickingClient.request(data.fakeplayerChunkX(), data.fakeplayerChunkZ(),
-                            data.dimensionKey(), enabled ? 0 : 1)) {
-                        fakeplayeraddon$pending = false;
-                    }
-                }).bounds(panelX + 8, 0, panelWidth - 16, 20).build();
+        Button button =
+                Button.builder(
+                                Component.literal(label)
+                                        .withStyle(
+                                                enabled
+                                                        ? ChatFormatting.BLUE
+                                                        : ChatFormatting.GREEN),
+                                clicked -> {
+                                    fakeplayeraddon$pending = true;
+                                    clicked.active = false;
+                                    if (!MobTickingClient.request(
+                                            data.fakeplayerChunkX(),
+                                            data.fakeplayerChunkZ(),
+                                            data.dimensionKey(),
+                                            enabled ? 0 : 1)) {
+                                        fakeplayeraddon$pending = false;
+                                    }
+                                })
+                        .bounds(panelX + 8, 0, panelWidth - 16, 20)
+                        .build();
         button.active = fakeplayeraddon$mobTicking != null && !fakeplayeraddon$pending;
         actionButtons.add(button);
         actionButtonYOffset.put(button, actionContentHeight == 0 ? 0 : actionContentHeight + 2);
@@ -81,8 +106,10 @@ public abstract class MobTickingScreenMixin extends Screen implements MobTicking
 
     @Override
     public void fakeplayeraddon$acceptMobTicking(MobTickingState state) {
-        if (data == null || state.chunkX() != data.fakeplayerChunkX()
-                || state.chunkZ() != data.fakeplayerChunkZ() || !state.dimension().equals(data.dimensionKey())) return;
+        if (data == null
+                || state.chunkX() != data.fakeplayerChunkX()
+                || state.chunkZ() != data.fakeplayerChunkZ()
+                || !state.dimension().equals(data.dimensionKey())) return;
         fakeplayeraddon$mobTicking = state.enabled();
         fakeplayeraddon$pending = false;
         buildActionButtons();

@@ -2,8 +2,9 @@ package dev.fakeplayeraddon;
 
 import dev.fakeplayeraddon.active.ActiveNetworking;
 import dev.fakeplayeraddon.mob.MobTicking;
-import dev.fakeplayeraddon.movement.MovementNetworking;
 import dev.fakeplayeraddon.movement.MovementCommands;
+import dev.fakeplayeraddon.movement.MovementNetworking;
+
 import net.fabricmc.api.ModInitializer;
 
 public final class FakeplayerAddon implements ModInitializer {

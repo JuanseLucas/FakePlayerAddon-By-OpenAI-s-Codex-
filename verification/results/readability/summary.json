@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "scope": "Source readability cleanup; published 1.2.0 release binaries retained",
+  "baseline_commit": "e85d902c6500ce204963ff3faf3717a37b9eaae0",
+  "release_jar_sha256": "dc4fad6143943d65bd5a0ecc382cbbf1114a823644cdc1b4b84b5e6a0e0d5cb5",
+  "formatter": {
+    "tool": "google-java-format",
+    "version": "1.32.0",
+    "style": "AOSP (four spaces)",
+    "check_passed": true
+  },
+  "build_passed": true,
+  "focused_checks": {
+    "persistence": 15,
+    "movement": 32,
+    "coverage": 43,
+    "client-singleplayer": 43
+  },
+  "focused_checks_total": 133,
+  "production_class_comparison": {
+    "production_class_count": 57,
+    "unchanged_excluding_debug_metadata": 55,
+    "refactored_classes": [
+      "dev/fakeplayeraddon/movement/MovementCommands.class",
+      "dev/fakeplayeraddon/movement/MovementNetworking.class"
+    ]
+  },
+  "verification_projects": {
+    "coverage": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    },
+    "events": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    },
+    "movement": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    },
+    "client": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    },
+    "dedicated": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    },
+    "mobcap": {
+      "compiled": true,
+      "classes_unchanged_excluding_debug": 1
+    }
+  },
+  "full_release_suite_rerun": false
+}

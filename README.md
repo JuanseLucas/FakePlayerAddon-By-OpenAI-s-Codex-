@@ -13,6 +13,10 @@ is required. The original mod and Fabric API remain required dependencies.
 This page lists everything added, fixed, removed, and deliberately retained
 across all addon releases. Detailed behavior and test records are linked below.
 
+**For the original mod developer:** start with [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md)
+for the source map, mixin targets, data/threading invariants, compatibility
+assumptions, and build/test/formatting instructions.
+
 ## Everything added
 
 ### Active Bots management menu

@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import de.chunkloader.config.ChunkloaderTarget;
 
 import java.io.IOException;
@@ -37,15 +38,23 @@ public final class MobTickingStore {
                 }
                 for (var element : root.getAsJsonArray("bots")) {
                     var entry = element.getAsJsonObject();
-                    settings.put(new BotKey(entry.get("dimension").getAsString(),
-                            entry.get("chunkX").getAsInt(), entry.get("chunkZ").getAsInt()),
+                    settings.put(
+                            new BotKey(
+                                    entry.get("dimension").getAsString(),
+                                    entry.get("chunkX").getAsInt(),
+                                    entry.get("chunkZ").getAsInt()),
                             entry.get("mobEntityTicking").getAsBoolean());
-                    movementLocks.put(new BotKey(entry.get("dimension").getAsString(),
-                            entry.get("chunkX").getAsInt(), entry.get("chunkZ").getAsInt()),
-                            !entry.has("movementLocked") || entry.get("movementLocked").getAsBoolean());
+                    movementLocks.put(
+                            new BotKey(
+                                    entry.get("dimension").getAsString(),
+                                    entry.get("chunkX").getAsInt(),
+                                    entry.get("chunkZ").getAsInt()),
+                            !entry.has("movementLocked")
+                                    || entry.get("movementLocked").getAsBoolean());
                 }
             } catch (RuntimeException exception) {
-                throw new IOException("Invalid mob ticking data; original file retained: " + file, exception);
+                throw new IOException(
+                        "Invalid mob ticking data; original file retained: " + file, exception);
             }
         }
     }
@@ -74,8 +83,11 @@ public final class MobTickingStore {
     public void setLocked(ChunkloaderTarget bot, boolean locked) throws IOException {
         BotKey key = BotKey.of(bot);
         Boolean previous = movementLocks.put(key, locked);
-        try { save(); } catch (IOException exception) {
-            if (previous == null) movementLocks.remove(key); else movementLocks.put(key, previous);
+        try {
+            save();
+        } catch (IOException exception) {
+            if (previous == null) movementLocks.remove(key);
+            else movementLocks.put(key, previous);
             throw exception;
         }
     }
@@ -131,24 +143,37 @@ public final class MobTickingStore {
         var root = new JsonObject();
         root.addProperty("version", 1);
         var bots = new JsonArray();
-        settings.entrySet().stream().sorted(Map.Entry.comparingByKey(
-                java.util.Comparator.comparing(BotKey::dimension).thenComparingInt(BotKey::x)
-                        .thenComparingInt(BotKey::z))).forEach(entry -> {
-            var bot = new JsonObject();
-            bot.addProperty("dimension", entry.getKey().dimension());
-            bot.addProperty("chunkX", entry.getKey().x());
-            bot.addProperty("chunkZ", entry.getKey().z());
-            bot.addProperty("mobEntityTicking", entry.getValue());
-            bot.addProperty("movementLocked", movementLocks.getOrDefault(entry.getKey(), true));
-            bots.add(bot);
-        });
+        settings.entrySet().stream()
+                .sorted(
+                        Map.Entry.comparingByKey(
+                                java.util.Comparator.comparing(BotKey::dimension)
+                                        .thenComparingInt(BotKey::x)
+                                        .thenComparingInt(BotKey::z)))
+                .forEach(
+                        entry -> {
+                            var bot = new JsonObject();
+                            bot.addProperty("dimension", entry.getKey().dimension());
+                            bot.addProperty("chunkX", entry.getKey().x());
+                            bot.addProperty("chunkZ", entry.getKey().z());
+                            bot.addProperty("mobEntityTicking", entry.getValue());
+                            bot.addProperty(
+                                    "movementLocked",
+                                    movementLocks.getOrDefault(entry.getKey(), true));
+                            bots.add(bot);
+                        });
         root.add("bots", bots);
         Path temporary = Files.createTempFile(file.getParent(), "mob-ticking-", ".tmp");
         try {
-            Files.writeString(temporary, new GsonBuilder().setPrettyPrinting().create().toJson(root),
+            Files.writeString(
+                    temporary,
+                    new GsonBuilder().setPrettyPrinting().create().toJson(root),
                     StandardCharsets.UTF_8);
             try {
-                Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+                Files.move(
+                        temporary,
+                        file,
+                        StandardCopyOption.ATOMIC_MOVE,
+                        StandardCopyOption.REPLACE_EXISTING);
             } catch (AtomicMoveNotSupportedException exception) {
                 Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING);
             }

@@ -110,3 +110,12 @@ directory must report `passed: true`. The large-radius test intentionally uses
 a small world border; see [coverage scope](../COVERAGE.md). The client harness
 adds original radius-button packet tests and a remote hopper beyond the host's
 render/simulation distances. Do not use these harnesses with a personal save.
+
+## Developer-readability cleanup
+
+The Java sources use explicit imports and pinned AOSP formatting. Run
+`scripts/format-java.sh --check` or `--write` from the repository root; see
+[DEVELOPER_NOTES.md](../DEVELOPER_NOTES.md) for architecture and formatting details.
+The [cleanup verification record](results/readability/README.md) is separate
+from the original 1.2.0 full-release validation. It records the focused runtime,
+persistence, formatter, and compiled-class equivalence checks for this pass.

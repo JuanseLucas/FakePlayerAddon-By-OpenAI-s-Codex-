@@ -2,11 +2,14 @@ package dev.fakeplayeraddon.mixin.common;
 
 import de.chunkloader.ChunkloaderMod;
 import de.chunkloader.manager.ChunkloaderManager;
-import dev.fakeplayeraddon.mob.MobTicking;
+
 import dev.fakeplayeraddon.mob.IndependentTicking;
+import dev.fakeplayeraddon.mob.MobTicking;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,10 +24,15 @@ public abstract class MobTickingLevelMixin {
         if (fakeplayeraddon$shouldPause(entity)) ci.cancel();
     }
 
-    @Inject(method = "tickPassenger(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)V",
-            at = @At("HEAD"), cancellable = true)
-    private void fakeplayeraddon$independentPassengerOffState(Entity vehicle, Entity passenger, CallbackInfo ci) {
-        if (!passenger.isRemoved() && passenger.getVehicle() == vehicle
+    @Inject(
+            method =
+                    "tickPassenger(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)V",
+            at = @At("HEAD"),
+            cancellable = true)
+    private void fakeplayeraddon$independentPassengerOffState(
+            Entity vehicle, Entity passenger, CallbackInfo ci) {
+        if (!passenger.isRemoved()
+                && passenger.getVehicle() == vehicle
                 && fakeplayeraddon$shouldPause(passenger)) ci.cancel();
     }
 
