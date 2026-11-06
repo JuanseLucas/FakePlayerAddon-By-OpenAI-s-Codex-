@@ -1,0 +1,39 @@
+{
+  "passed": false,
+  "checks": [
+    "Spawning-ON bot retains vanilla natural-spawning eligibility",
+    "Blocked bot trigger preserves the existing trap horse",
+    "General vanilla player proximity still recognizes spawning-ON bot",
+    "Spawning-OFF bot alone cannot initiate a zombie siege",
+    "Spawning-OFF bot alone cannot activate a skeleton horse trap",
+    "Event exclusions do not give spawning-OFF bots natural-spawning eligibility",
+    "Event exclusions are independent of the mob-ticking toggle",
+    "Real player still initiates a vanilla zombie siege beside a spawning-OFF bot",
+    "Real player still activates horse trap beside a spawning-OFF bot",
+    "Real player still initiates siege with spawning-ON bot present",
+    "A nearer bot does not hide an eligible real horse-trap trigger",
+    "Horse trap preserves real-player detection inside ten blocks",
+    "Real-player horse trap creates the vanilla four skeleton riders",
+    "Event checks preserve the original live bot and identity",
+    "Event checks leave spawning-ON vanilla eligible chunk count unchanged",
+    "Spawning-OFF bot alone cannot generate pillager patrols",
+    "Spectator remains ineligible for patrol generation",
+    "Real player still generates actual patrol mobs beside spawning-OFF bot",
+    "Real player still generates actual patrol mobs beside spawning-ON bot",
+    "Natural ON-to-OFF transition still clears eligibility after event checks",
+    "Bot loading configuration and independent mob ticking remain intact"
+  ],
+  "failures": [
+    "Spawning-ON bot alone cannot initiate a zombie siege",
+    "Spawning-ON bot alone cannot activate a skeleton horse trap",
+    "Horse trap preserves vanilla strict ten-block boundary",
+    "Spectator cannot replace a bot as siege or horse-trap trigger",
+    "Dead real player cannot activate horse trap",
+    "Spawning-ON bot alone cannot generate pillager patrols"
+  ],
+  "observations": {
+    "spawningOnEligibleChunks": 289,
+    "horseTrapSkeletonsCreated": 4,
+    "pillagersSpawnedByRealPlayer": 9
+  }
+}

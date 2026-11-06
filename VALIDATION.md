@@ -1,11 +1,41 @@
 # Validation record
 
+## Version 1.1.1
+
+JAR SHA-256: `6ce193b38b3fb8f330b0a922c8d8df497aa6ab881d7ce58b8a2a34f2052e089e`
+
+The Java 25/Fabric build and all **182 checks** pass against 1.1.1: 15
+persistence, 40 dedicated-server, 10 original restart, 14 mob-switch, 32
+movement, 7 movement-restart, 37 rendered client/singleplayer, and 27 new
+hostile-event assertions. Current runtime records are in `verification/results/`.
+
+The new event harness exercises the actual vanilla siege setup routine with
+occupied village bed POIs; actual patrol generation with fixed seeds outside
+the village; and the skeleton trap proximity goal, including four actual
+skeleton riders spawned for a real-player trigger. All three exclude bots
+with natural spawning ON and OFF, while the real-player positive controls
+remain functional. Horse-trap boundary, spectator, dead-player, and mixed
+bot/real-player controls pass. Global proximity still recognizes a bot, and
+vanilla spawning eligibility remains unchanged. See [EVENT_EXCLUSIONS.md](EVENT_EXCLUSIONS.md).
+
+The same event harness run with 1.1.0 records expected failures in
+`events-before-patch.json`; `events-after-patch.json` contains the passing
+1.1.1 result. These deliberately failing historical controls are not included
+in the 182 passing checks. The existing mob-switch regression again reports
+250 counted monsters and 289 eligible chunks before and after bot activation.
+Both restart suites use fully stopped and restarted dedicated servers.
+
+No hopper/minecart patch was needed: the user identified collection chunks
+outside the bot radius. No environment configuration was changed or published.
+
+
 ## Version 1.1.0
 
 JAR SHA-256: `19b763f5512bbe99e34bdaf9013625e8edaf358802e54f512d11fcfbe5e78b7a`
 
 The Java 25/Fabric build and fifteen persistence checks pass. Runtime results
-against the 1.1.0 release artifact are recorded in `verification/results/`.
+were recorded against the 1.1.0 release artifact at release time and have now
+been refreshed for 1.1.1 in `verification/results/`.
 All **155 checks** pass: 15 persistence, 40 dedicated-server, 10 original
 restart, 14 mob-switch, 32 movement, 7 movement-restart, and 37 rendered
 client/singleplayer checks. Both restart suites use a fully stopped and
@@ -37,7 +67,7 @@ See [MOBCAP_FIX.md](MOBCAP_FIX.md) and `verification/results/` for the diagnosis
 and before/after records. Current downloads and checksums are in `dist/`.
 
 The detailed 1.0.0 record below is retained as release history. The runtime records were rerun on 1.0.1 at release time; the current records
-are now from 1.1.0, except the deliberately failing before-patch regression.
+are now from 1.1.1, except the deliberately failing historical regression controls.
 
 ## Original 1.0.0 release record
 

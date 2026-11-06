@@ -1,5 +1,4 @@
 {
-  "failure": "",
   "checks": [
     "Physical movement coordinates survive an actual server restart",
     "Moved bot retains original owner, radius, appearance and spawning settings after restart",
@@ -9,5 +8,6 @@
     "Restored bot can be unlocked and moved through server physics",
     "Movement after restart continues updating saved coordinates"
   ],
+  "failure": "",
   "passed": true
 }

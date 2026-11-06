@@ -1,4 +1,4 @@
-Fakeplayer Chunkloader Addon 1.1.0
+Fakeplayer Chunkloader Addon 1.1.1
 Minecraft Java 26.3 | Fabric Loader 0.19.5+ | Java 25+
 
 Install this jar on both client and dedicated server alongside:
@@ -13,7 +13,7 @@ The existing F8 Disabled Bots menu is retained.
 
 The original mod is required and is not bundled.
 
-Replace the previous addon JAR with 1.1.0; keep Fakeplayer Chunkloader 2.1.0 installed.
+Replace the previous addon JAR with 1.1.1; keep Fakeplayer Chunkloader 2.1.0 installed.
 
 Movement: original bot config > Move bot to: > enter X/Y/Z > Set.
 Reset clears inputs only. Coordinates use the bot's current dimension.
@@ -21,3 +21,6 @@ Unlock bot permits authorized pushing/punch knockback; Lock bot anchors it.
 Punches and sneak-right-click no longer disable/delete bots.
 Use the configuration Disable action or management Delete confirmation.
 Spawn at coordinates: /fakeplayer add 100 64 -200 (alias: /fp add).
+
+Bots cannot trigger zombie sieges, pillager patrols, or skeleton horse traps.
+These exclusions apply with natural spawning ON or OFF; real players retain vanilla behavior.

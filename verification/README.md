@@ -12,8 +12,8 @@ Run that project with the same jar properties and isolated server preparation
 as the dedicated project, on a fresh world. Its `run/mobcap-results.json`
 must report `passed: true`. The recorded `mobcap-before-patch.json` deliberately
 contains the expected failure from addon 1.0.0, not a current failing test.
-The existing 14 mob-switch checks also run against 1.1.0. All 155 checks pass
-including the root persistence assertions.
+The existing 14 mob-switch checks also run against 1.1.1. All 182 checks pass
+including the root persistence assertions and 27 event assertions.
 
 Use Java 25 and first build the addon as described in the root README. Each
 harness accepts `-PchunkloaderJar=/absolute/path/to/original.jar` and optionally
@@ -73,3 +73,20 @@ It verifies persisted physical coordinates and original settings, lock and
 mob flags, automatic body restoration, marker association, and movement after
 restart. The client harness also tests coordinate and lock controls through
 actual integrated-server packets.
+
+## Bot-triggered hostile events
+
+Version 1.1.1 adds the isolated `events/` server harness. Prepare its generated
+`events/run/` using `events/server.properties.example` and accept the EULA for
+that isolated test server. Run:
+
+```sh
+./gradlew -p verification/events runServer -PchunkloaderJar=/absolute/path/to/original.jar
+```
+
+Its `run/event-results.json` must report `passed: true` and an empty `failures`
+list. Village-bed fixture setup is required but is not included in the reported
+assertion count. A negative control uses the same harness with
+`-PaddonJar=/absolute/path/to/1.1.0.jar`; its expected failures are recorded
+separately. The harness creates and removes fixture bots and POIs, so use only
+its own test save. See [event scope](../EVENT_EXCLUSIONS.md).

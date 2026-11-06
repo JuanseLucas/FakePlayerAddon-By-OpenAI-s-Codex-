@@ -3,11 +3,15 @@
 A separate client-and-server Fabric addon for Minecraft Java **26.3** and
 **Fakeplayer Chunkloader 2.1.0**. Java **25** is required.
 
-Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.0.jar) or
-[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.0.zip).
+Download the [addon JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.1.jar) or
+[ZIP containing the JAR](dist/fakeplayer-chunkloader-addon-26.3-1.1.1.zip).
 Checksums are in [dist/SHA256SUMS](dist/SHA256SUMS).
 
-**1.1.0 adds coordinate movement and persistent bot locking inside the original configuration screen.**
+**1.1.1 excludes bots from triggering zombie sieges, pillager patrols, and skeleton horse traps.**
+Real-player events and normal configured bot spawning remain intact. See
+[event exclusions and scope](EVENT_EXCLUSIONS.md).
+
+1.1.0 added coordinate movement and persistent bot locking inside the original configuration screen.
 See [movement controls and commands](MOVEMENT.md). The independent-loader and
 mob-switch fixes from 1.0.1 remain included; see [diagnosis and regression evidence](MOBCAP_FIX.md).
 

@@ -1,6 +1,5 @@
 {
   "passed": true,
-  "failure": "",
   "checks": [
     "Create original bot with owner",
     "Existing bot defaults to locked",
@@ -34,5 +33,6 @@
     "Relative command creates bot in Nether with resolved coordinates",
     "Only explicitly spawning-enabled command bot contributes vanilla eligibility",
     "Punching from an overlapping position pushes in the attacker\u0027s facing direction"
-  ]
+  ],
+  "failure": ""
 }
